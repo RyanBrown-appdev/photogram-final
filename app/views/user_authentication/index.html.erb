@@ -1,0 +1,74 @@
+<h1>List of users</h1>
+<table border="1">
+<tr>
+    <th>
+      Username
+    </th>
+
+    <th>
+      Private?
+    </th>
+
+    <th></th>
+    <th></th>
+  </tr>
+
+  <% @list_of_users.each do |a_user| %>
+      <tr>
+      <td>
+        <%= a_user.username %>
+      </td>
+
+      <td>
+          <%if a_user.private == TRUE %>
+            Yes
+          <%else%>
+            No 
+          <% end %>
+      </td>
+
+      <td>
+        <%if session[:user_id] != nil%>
+          <% follow_status = FollowRequest.where(recipient_id: a_user.id, sender_id: @current_user.id).at(0)%>
+          <%if follow_status != nil%>
+            <%follow_status = follow_status.status%>
+          <%end%>
+          <%if session[:user_id] != nil%>
+            <%if follow_status == nil %>
+                <form action="/insert_follow_request" method="post">
+                  <input type="hidden" name="query_recipient_id" value=<%= a_user.id %>>
+                  <input type="hidden" name="query_sender_id" value=<%= @current_user.id %>>
+
+                  <%if  a_user.private == TRUE%>
+                    <input type="hidden" name="query_status" value="pending">
+                  <%else %>
+                    <input type="hidden" name="query_status" value="accepted">
+                  <%end%>
+              <button>
+                Follow
+              </button>
+            </form>
+            <% elsif follow_status == 'accepted' %>
+                <a href="/delete_follow_request/<%=FollowRequest.where(recipient_id: a_user.id, sender_id: @current_user.id).at(0).id%>">
+                Unfollow
+                </a>
+            <% elsif follow_status == 'pending' %>
+                Request sent.
+                <a href="/delete_follow_request/<%=FollowRequest.where(recipient_id: a_user.id, sender_id: @current_user.id).at(0).id%>">
+                  Cancel
+                </a>
+            <%end%>
+          <%end%>
+        <%end%>
+      </td>
+
+      <td>
+        <a href="/users/<%= a_user.username %>">Show details</a>
+      </td>
+    </tr>
+      <% end %>
+    </table>
+
+
+
+    

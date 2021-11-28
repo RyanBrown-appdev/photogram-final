@@ -1,0 +1,74 @@
+<div>
+  <div>
+    <h1>
+      List of photos
+    </h1>
+  </div>
+</div>
+
+ <%if session[:user_id] != nil%>
+    <form action="/insert_photo" method="post" enctype="multipart/form-data">
+      <label for="browser_input">Image</label>
+      <input id="browser_input" type="file" name="query_image" placeholder="Enter a URL for the image...">
+
+      <label for="browser_caption">Caption</label>
+      <textarea id="browser_caption" name="query_caption" placeholder="Enter a caption for the photo..."></textarea>
+      <input type="hidden" name="query_comments_count" value=0>
+      <input type="hidden" name="query_likes_count" value=0>
+      <input type="hidden" name="query_owner_id" value=<%=@current_user.id%>>
+      
+
+      <button>Add photo</button>
+    </form>
+  <% end %>
+
+<hr>
+<div>
+  <div>
+     <table border="1">
+      <tr>
+        <th>Image</th>
+        <th>Caption</th>
+        <th>Owner</th>
+        <th>Posted</th>
+        <th>Likes</th>
+        <th></th>
+      </tr>
+
+      <% @list_of_photos.each do |a_photo| %>
+  <tr>
+      <td>
+        <img src="<%= a_photo.image %>">
+      </td>
+    
+      <td>
+       <%= a_photo.caption %>
+      </td>
+    
+      <td>
+        <%username = User.where(id: a_photo.owner_id).at(0).username%>
+        <%= username %>
+      </td>
+    
+      <td>
+        <%= time_ago_in_words(a_photo.created_at) %> ago
+      </td>
+    
+      <td>
+         <%= a_photo.likes_count %>
+      </td>
+    
+      <td>  
+        <a href="/photos/<%= a_photo.id%>">
+          Show details
+        </a>
+      </td>
+    </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>
+
+   

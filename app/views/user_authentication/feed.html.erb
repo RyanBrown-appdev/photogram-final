@@ -1,0 +1,102 @@
+<h1><%=@the_user.username%></h1>
+
+<dl>
+  <dt>Private</dt>
+  <dd><%=@the_user.private%></dd>
+
+  <dt>Followers</dt>
+  <dd>
+    <%=FollowRequest.where(recipient_id:  @the_user.id, status: "accepted").length%>
+
+  </dd>
+
+  <dt>Following</dt>
+  <dd><%=FollowRequest.where(sender_id:  @the_user.id, status: "accepted").length%></dd>
+
+</dl>
+
+<nav>
+  <ul>
+    <li>
+      <a href="/users/<%=@the_user.username%>">Profile</a>
+    </li>
+    <li>
+      <a href="/users/<%=@the_user.username%>/liked_photos">Liked photos</a>
+    </li>
+    <li>
+      <a href="/users/<%=@the_user.username%>/feed">Feed</a>
+    </li>
+    <li>
+      <a href="/users/<%=@the_user.username%>/discover">Discover</a>
+    </li>
+  </ul>
+</nav>
+
+<% feed_photos = Array.new%>
+
+<%@following.each do |person|%>
+  <%feed_photos << Photo.where(owner_id: person.recipient_id)%>
+<%end%>
+<%photo_set = Array.new%>
+<% feed_photos.each do |photos|%>
+  <%photos.each do |a_photo|%>
+    <% photo_set << a_photo%>
+  <%end%>
+<%end%>
+<h2>Feed (<%= photo_set.length%>)</h2> 
+
+
+<table border="1">
+  <tr>
+    <th>
+      Image
+    </th>
+
+    <th>
+      Owner
+    </th>
+
+    <th>
+      Caption
+    </th>
+
+    <th>
+      Posted
+    </th>
+
+    <th>
+      Likes
+    </th>
+
+    <th></th>
+  </tr>
+  <%photo_set.each do |a_photo|%>
+  <tr>
+    <td>
+      <img src="<%= a_photo.image%>">
+    </td>
+
+    <td>
+      <%=User.where(id: a_photo.owner_id).first.username%>
+    </td>
+
+    <td>
+      <%=a_photo.caption%>
+    </td>
+
+    <td>
+      <%= time_ago_in_words(a_photo.created_at)%> ago
+    </td>
+
+    <td>
+      <%= a_photo.likes_count%>
+    </td>
+
+    <td>
+      <a href="/photos/<%=a_photo.id%>">
+        Show details
+      </a>
+    </td>
+  </tr>
+<%end%>
+</table>

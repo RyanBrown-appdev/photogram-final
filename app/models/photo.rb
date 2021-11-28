@@ -3,6 +3,7 @@
 # Table name: photos
 #
 #  id             :integer          not null, primary key
+#  avatar         :string
 #  caption        :text
 #  comments_count :integer
 #  image          :string
@@ -12,4 +13,5 @@
 #  owner_id       :integer
 #
 class Photo < ApplicationRecord
+  mount_uploader :avatar, AvatarUploader
 end

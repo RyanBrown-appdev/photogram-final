@@ -3,6 +3,7 @@
 <dl>
   <dt>Image</dt>
   <dd>
+    <img src="<%= @the_photo.avatar %>" class="img-responsive">
     <img src=<%=@the_photo.image%>>
   </dd>
 
@@ -23,7 +24,6 @@
 
   <dt>Likes count</dt>
   <dd><%=@the_photo.likes_count%></dd>
-  <dd>2</dd>
 
   <dt>Comments count</dt>
   <dd><%=@the_photo.comments_count%></dd>
@@ -66,10 +66,12 @@
   <%if @current_user.id == @the_photo.owner_id%>
     <dt>Edit photo</dt>
     <dd>
-      <form action="/modify_photo/<%@the_photo.id%>" method="post" enctype="multipart/form-data">
+      <form action="/modify_photo/<%=@the_photo.id%>" method="post" enctype="multipart/form-data">
         <label for="browser_image">Image URL</label>
         <input id="browser_image" type="file" name="query_image" placeholder="Enter a URL for the image..." value="http://res-3.cloudinary.com/dt1gn6erd/image/upload/v1638062724/uuhpshyqmuvwgcjp2rco.png">
-      
+        <input type="hidden" name="query_comments_count" value=<%=@the_photo.comments_count%>>
+        <input type="hidden" name="query_likes_count" value=<%=@the_photo.likes_count%>>
+         <input type="hidden" name="query_owner_id" value=<%=@current_user.id%>>
         <label for="browser_caption">Caption</label>
         <textarea id="browser_caption" name="query_caption" placeholder="Enter a caption for the photo...">howdy</textarea>
       

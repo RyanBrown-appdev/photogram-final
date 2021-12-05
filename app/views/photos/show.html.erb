@@ -3,8 +3,11 @@
 <dl>
   <dt>Image</dt>
   <dd>
-    <img src="<%= @the_photo.avatar %>" class="img-responsive">
-    <img src=<%=@the_photo.image%>>
+    <%if @the_photo.avatar.length > 0 %>
+        <img src="<%= @the_photo.avatar %>">
+      <% else %>
+        <img src="<%= @the_photo.image %>">
+      <% end %>
   </dd>
 
   <dt>Caption</dt>
@@ -27,6 +30,7 @@
 
   <dt>Comments count</dt>
   <dd><%=@the_photo.comments_count%></dd>
+  
 
   <dt>Fans</dt>
   <dd>

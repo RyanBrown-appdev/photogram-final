@@ -40,8 +40,11 @@
  
   <tr>
       <td>
-        <img src="<%= a_photo.avatar %>" class="img-responsive">
-        <img src="<%= a_photo.image %>" class="img-responsive" >
+      <%if a_photo.avatar.length > 0%>
+        <img src="<%= a_photo.avatar %>">
+      <% else %>
+        <img src="<%= a_photo.image %>">
+      <% end %>
       </td>
     
       <td>

@@ -10,6 +10,8 @@ gem 'rails', '~> 6.0.3', '>= 6.0.3.1'
 gem "carrierwave"
 gem "cloudinary"
 
+
+
 # Use Puma as the app server
 gem 'puma', '~> 4.1'
 # Use SCSS for stylesheets
@@ -77,6 +79,3 @@ end
 group :production do
   gem 'pg'
 end
-
-gem "carrierwave"
-gem "cloudinary"

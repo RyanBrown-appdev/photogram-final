@@ -1,0 +1,6 @@
+production:
+  cloud_name: "uchicago120"
+  api_key: "539787953649616"
+  api_secret: "zznC3zN4E9rSpR8zuf2rySn68b8"
+  secure: true
+  cdn_subdomain: true

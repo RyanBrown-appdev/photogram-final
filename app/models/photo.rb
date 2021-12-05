@@ -12,6 +12,8 @@
 #  updated_at     :datetime         not null
 #  owner_id       :integer
 #
+
 class Photo < ApplicationRecord
   mount_uploader :avatar, AvatarUploader
 end
+

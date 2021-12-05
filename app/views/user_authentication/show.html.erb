@@ -131,8 +131,12 @@
   <%Photo.where(owner_id: @the_user.id).each do |a_photo|%>
   <tr>
     <td>
-        <img src="<%= a_photo.avatar %>" class="img-responsive">
-        <img src="<%= a_photo.image %>" >
+      <%if a_photo.avatar.length > 0%>
+        <img src="<%= a_photo.avatar %>">
+      <% else %>
+        <img src="<%= a_photo.image %>">
+      <% end %>
+
     </td>
 
     <td>
